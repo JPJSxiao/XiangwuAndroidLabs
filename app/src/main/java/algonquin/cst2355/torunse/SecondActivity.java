@@ -46,16 +46,8 @@ public class SecondActivity extends AppCompatActivity {
       //  binding.editTextEmail.setText(emailAddress);
 
         SharedPreferences.Editor editor= prefs.edit();
-
-
         String phoneNumber = prefs.getString("PhoneNumber","");
         binding.editTextPhone.setText(phoneNumber);
-
-
-
-
-
-
         editor.apply();
 
         //setContentView(R.layout.activity_second);
@@ -79,7 +71,7 @@ public class SecondActivity extends AppCompatActivity {
          //   Intent call = new Intent(Intent.ACTION_DIAL);
         //    String phoneNumber = prefs.getString("PhoneNumber")
        //     call.setData(Uri.parse("telL" + num));
-          //  startActivity(call);
+          startActivity(dial);
 
 
             if (dial.resolveActivity(getPackageManager()) != null) {
@@ -139,8 +131,6 @@ public class SecondActivity extends AppCompatActivity {
 
                     int i = 0;
                 }
-
-
                 }
 
             }

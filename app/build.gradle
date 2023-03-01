@@ -7,7 +7,11 @@ android {
         viewBinding true
     }
     namespace 'algonquin.cst2355.torunse'
-    compileSdk 32
+    compileSdk 33
+
+    buildFeatures {
+        viewBinding true
+    }
 
     defaultConfig {
         applicationId "algonquin.cst2355.torunse"
@@ -30,6 +34,21 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+android.applicationVariants.all { variant ->
+    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+        description "Generates Javadoc for $variant.name."
+
+        source = variant.javaCompile.source
+        destinationDir = file("$rootDir/javadoc/")
+        failOnError false
+
+        doFirst {
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+            options.addStringOption "-show-members", "package"
+        }
+    }}
 
 dependencies {
 

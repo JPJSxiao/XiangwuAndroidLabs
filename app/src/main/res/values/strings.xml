@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Xiangwu\'s Android Labs</string>
+    <string name="enterpass">Type your message</string>
+    <string name="button">SEND</string>
 </resources>

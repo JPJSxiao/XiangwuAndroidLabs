@@ -4,16 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import algonquin.cst2355.torunse.databinding.ActivityChatRoomBinding;
+
 public class ChatRoom extends AppCompatActivity {
 
-    ActivityChatRoomBinding binding;
+   ActivityChatRoomBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
+      binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         //setContentView(R.layout.activity_chat_room);
-        setContentView(binding.getRoot());
+       setContentView(binding.getRoot());
+       binding.recycleView.
     }
 }

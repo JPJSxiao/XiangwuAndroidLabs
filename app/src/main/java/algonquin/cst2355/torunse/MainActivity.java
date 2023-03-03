@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
             public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
                 if (viewType == 0) {
-                    RowLayoutBinding binding = RowLayoutBinding.inflate(getLayoutInflater(), parent, false);
+                    RowLayout2Binding binding = RowLayout2Binding.inflate(getLayoutInflater(), parent, false);
                     View root = binding.getRoot();
                     return new MyRowHolder(root);
                 } else {
-                    RowLayout2Binding binding = RowLayout2Binding.inflate(getLayoutInflater(),
+                    RowLayoutBinding binding = RowLayoutBinding.inflate(getLayoutInflater(),
                             parent, false
 
                     );
@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 ChatMessage messageOnThisRow = messageList.get(position);
                 holder.messageText.setText(messageOnThisRow.getMessage());
 
-                SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
-                String currentDateandTime = sdf.format(new Date());
-                holder.timeText.setText(currentDateandTime);
+             //   SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
+              //  String currentDateandTime = sdf.format(new Date());
+                holder.timeText.setText(messageOnThisRow.getTimeSent());
             }
 
 
@@ -76,8 +76,12 @@ public class MainActivity extends AppCompatActivity {
                 return messageList.size();
             }
             public int getItemViewType(int position) {
-                //you can return anything to represent a layout
-                return position % 2;
+                //you can return anything to represent a layout'
+                if (messageList.get(position).isSentButton()){
+                    return 0;
+                }
+                else
+                return 1;
             }
 
         });

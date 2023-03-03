@@ -7,11 +7,11 @@
 
     <TextView
         android:id="@+id/message"
-        android:textSize="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Message Goes here"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="25dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -23,4 +23,12 @@
         android:text="Time goes here"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/message" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/send_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

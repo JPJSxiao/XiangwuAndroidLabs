@@ -40,7 +40,6 @@ public class ChatRoom extends AppCompatActivity {
     ChatMessageDao mDao;
 
 
-
     @Override//this starts teh application
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +52,20 @@ public class ChatRoom extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
-        messageList = cvm.messages; //survives rotation changes
+        //messageList = cvm.messages; //survives rotation changes
+         messageList = cvm.messages.getValue();
 
+//        if(messageList == null)
+//        {
+            cvm.messages.postValue( messageList = new ArrayList<ChatMessage>());
+//        }
 
         Executor thread = Executors.newSingleThreadExecutor();
         thread.execute(() ->
                 {
                     // first load old message on the second thread
-                    List<ChatMessage> previouMessage = mDao.getAllMessages(); //select * from ChatMessage
-                    messageList.addAll(previouMessage); //add everything from the database
+                    List<ChatMessage> previousMessage = mDao.getAllMessages(); //select * from ChatMessage
+                    messageList.addAll(previousMessage); //add everything from the database
 
                     runOnUiThread(() -> {
                         //this is on chatRoom thread

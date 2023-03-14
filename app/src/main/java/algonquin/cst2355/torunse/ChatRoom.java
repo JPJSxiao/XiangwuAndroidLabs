@@ -118,7 +118,7 @@ public class ChatRoom extends AppCompatActivity {
 
         binding.sendButton.setOnClickListener(clk ->{
             String txt = binding.editText.getText().toString();
-            SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
             String t = sdf.format(new Date());
             boolean sent = true;
             //messageList.add(new ChatMessage(txt,t,sent));
@@ -138,7 +138,7 @@ public class ChatRoom extends AppCompatActivity {
         binding.ReceiveButton.setOnClickListener(clk ->{
             String txt = binding.editText.getText().toString();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
             String t = sdf.format(new Date());
             boolean sent = false;
             //messageList.add(new ChatMessage(txt,t,sent));

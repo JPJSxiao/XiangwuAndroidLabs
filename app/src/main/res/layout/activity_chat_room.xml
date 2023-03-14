@@ -7,57 +7,47 @@ android:layout_height="match_parent"
 tools:context=".ChatRoom">
 
 
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/enterpass"
-    android:textSize="30sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/enterpass"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/ReceiveButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/sendButton"
+        app:layout_constraintTop_toTopOf="@+id/ReceiveButton" />
 
+    <Button
+        android:id="@+id/ReceiveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-<Button
-    android:id="@+id/sendButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:text="@string/button"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:text="RECEIVE"
+        app:layout_constraintBottom_toBottomOf="@+id/sendButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText"
+        app:layout_constraintTop_toTopOf="@+id/sendButton"
+        app:layout_constraintVertical_bias="1.0" />
 
-<EditText
-    android:id="@+id/editText"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toStartOf="@+id/ReceiveButton"
-    app:layout_constraintStart_toEndOf="@+id/sendButton"
-    app:layout_constraintTop_toTopOf="@+id/sendButton" />
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/theRecycleView"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginTop="32dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/sendButton"
-    app:layout_constraintVertical_bias="1.0" />
-
-<Button
-    android:id="@+id/ReceiveButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="RECEIVE"
-    app:layout_constraintBottom_toBottomOf="@+id/sendButton"
-
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/sendButton"
-    app:layout_constraintVertical_bias="0.0" />
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/theRecycleView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#F2F3F5"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,8 +41,8 @@ public class ChatRoom extends AppCompatActivity {
 
     ChatMessageDao mDao;
 
-    ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
-
+    ChatViewModel cvm ;
+    MessageDetailsFragment prevFragment;
 
     @Override//this starts teh application
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class ChatRoom extends AppCompatActivity {
         ActivityChatRoomBinding binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
+        cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
         //messageList = cvm.messages; //survives rotation changes
          messageList = cvm.messages.getValue();
 
@@ -65,9 +65,14 @@ public class ChatRoom extends AppCompatActivity {
             FragmentManager fMgr = getSupportFragmentManager();
             FragmentTransaction tx = fMgr.beginTransaction();
 
+            if (prevFragment != null){
+                tx.remove(prevFragment);
+            }
 
             tx.add(R.id.fragmentLocation, chatFragment);
+            prevFragment = chatFragment;
             tx.commit();
+            tx.addToBackStack("");
              
 
         });

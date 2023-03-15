@@ -13,7 +13,7 @@ tools:context=".ChatRoom">
         android:layout_height="wrap_content"
         android:hint="@string/enterpass"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ReceiveButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ReceiveButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/sendButton"
@@ -44,11 +44,12 @@ tools:context=".ChatRoom">
         android:layout_width="300dp"
         android:layout_height="0dp"
         android:background="#F2F3F5"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ReceiveButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
+        android:id="@+id/fragmentLocation"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/purple_200"

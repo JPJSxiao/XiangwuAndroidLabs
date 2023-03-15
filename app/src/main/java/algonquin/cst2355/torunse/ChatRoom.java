@@ -3,6 +3,8 @@ package algonquin.cst2355.torunse;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +41,8 @@ public class ChatRoom extends AppCompatActivity {
 
     ChatMessageDao mDao;
 
+    ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
+
 
     @Override//this starts teh application
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +55,22 @@ public class ChatRoom extends AppCompatActivity {
         ActivityChatRoomBinding binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
+        //ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
         //messageList = cvm.messages; //survives rotation changes
          messageList = cvm.messages.getValue();
+
+         cvm.selectedMessage.observe(this,(newValue) -> {
+
+            MessageDetailsFragment chatFragment = new MessageDetailsFragment(newValue);
+            FragmentManager fMgr = getSupportFragmentManager();
+            FragmentTransaction tx = fMgr.beginTransaction();
+
+
+            tx.add(R.id.fragmentLocation, chatFragment);
+            tx.commit();
+             
+
+        });
 
 //        if(messageList == null)
 //        {
@@ -165,6 +182,7 @@ public class ChatRoom extends AppCompatActivity {
             super(itemView);
 
             itemView.setOnClickListener(click->{
+                /*
                int position = getAbsoluteAdapterPosition();//which row was clicked
 
                 ChatMessage clickedMessage = messageList.get(position);
@@ -205,7 +223,11 @@ public class ChatRoom extends AppCompatActivity {
                     builder.setNegativeButton("Cancel", (dialog, which)->{
 
                     });
-                    builder.create().show();
+                    builder.create().show();*/
+                int position = getAbsoluteAdapterPosition();
+                ChatMessage selected = messageList.get(position);
+               // ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
+               cvm.selectedMessage.postValue(selected);
             });
             messageText = itemView.findViewById(R.id.message);
             timeText = itemView.findViewById(R.id.time);

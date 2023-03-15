@@ -62,7 +62,7 @@ public class MainActivityTest {
         materialButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.textView4), withText("You shall not pass!"),
+                allOf(withId(R.id.typeText), withText("You shall not pass!"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView.check(matches(withText("You shall not pass!")));
@@ -113,7 +113,7 @@ public class MainActivityTest {
         materialButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.textView4), withText("You shall not pass!"),
+                allOf(withId(R.id.typeText), withText("You shall not pass!"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView.check(matches(withText("You shall not pass!")));
@@ -148,7 +148,7 @@ public class MainActivityTest {
         materialButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.textView4), withText("You shall not pass!"),
+                allOf(withId(R.id.typeText), withText("You shall not pass!"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView.check(matches(withText("You shall not pass!")));
@@ -184,7 +184,7 @@ public class MainActivityTest {
         materialButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.textView4), withText("You shall not pass!"),
+                allOf(withId(R.id.typeText), withText("You shall not pass!"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView.check(matches(withText("You shall not pass!")));
@@ -218,7 +218,7 @@ public class MainActivityTest {
         materialButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.textView4), withText("You shall not pass!"),
+                allOf(withId(R.id.typeText), withText("You shall not pass!"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView.check(matches(withText("You shall not pass!")));

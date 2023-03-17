@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,6 +45,77 @@ public class ChatRoom extends AppCompatActivity {
 
     ChatViewModel cvm ;
     MessageDetailsFragment prevFragment;
+    int position;
+    public TextView messageText;
+    public TextView timeText;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+         super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.item_1:
+
+//               int position = getAbsoluteAdapterPosition();//which row was clicked
+
+//
+//                ChatMessage clickedMessage = messageList.get(position);
+
+                ChatMessage clickedMessage = cvm.selectedMessage.getValue();
+               // int position = getAbsoluteAdapterPosition();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
+                    builder.setMessage("Do you want to delete this message?");
+                    builder.setTitle("Warning!!");
+                builder.setPositiveButton("OK", (dialog, which)->{
+                Executor thread_1 = Executors.newSingleThreadExecutor();
+                thread_1.execute(()->{
+
+                        mDao.deleteMessage(clickedMessage);
+                        messageList.remove(position);
+                        runOnUiThread(()->{
+                            myAdapter.notifyItemRemoved(position);
+                            Snackbar.make(messageText, "Item deleted", Snackbar.LENGTH_LONG)
+                                    .setAction("Undo", clk ->{
+                                        Executor thread_2 = Executors.newSingleThreadExecutor();
+                                        thread_2.execute(()->{
+
+                                                    mDao.insertMessage(clickedMessage);
+                                                    messageList.add(position,clickedMessage);
+                                                    runOnUiThread(()->{
+                                                        myAdapter.notifyItemInserted(position);
+                                                    });
+
+
+                                    });
+                                    })
+                                    .show();
+
+                        }
+                        );
+
+                    });
+                });
+                    builder.setNegativeButton("Cancel", (dialog, which)->{
+
+                    });
+                    builder.create().show();
+                //int position = getAbsoluteAdapterPosition();
+                ChatMessage selected = messageList.get(position);
+                // ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
+                cvm.selectedMessage.postValue(selected);
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override//this starts teh application
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +127,9 @@ public class ChatRoom extends AppCompatActivity {
 
         ActivityChatRoomBinding binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.myToolbar);
+
 
         cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
         //messageList = cvm.messages; //survives rotation changes
@@ -229,7 +305,7 @@ public class ChatRoom extends AppCompatActivity {
 
                     });
                     builder.create().show();*/
-                int position = getAbsoluteAdapterPosition();
+                position = getAbsoluteAdapterPosition();
                 ChatMessage selected = messageList.get(position);
                // ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
                cvm.selectedMessage.postValue(selected);

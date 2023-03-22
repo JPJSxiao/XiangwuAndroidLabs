@@ -63,11 +63,6 @@ public class ChatRoom extends AppCompatActivity {
         {
             case R.id.item_1:
 
-//               int position = getAbsoluteAdapterPosition();//which row was clicked
-
-//
-//                ChatMessage clickedMessage = messageList.get(position);
-
                 ChatMessage clickedMessage = cvm.selectedMessage.getValue();
                // int position = getAbsoluteAdapterPosition();
 
@@ -112,9 +107,16 @@ public class ChatRoom extends AppCompatActivity {
                 // ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
                 cvm.selectedMessage.postValue(selected);
 
+            case R.id.item_2:{
+
+                Snackbar.make(messageText, "Version 1.0, created by Xiangwu Dai", Snackbar.LENGTH_LONG);
+            }
 
         }
-        return super.onOptionsItemSelected(item);
+
+
+        return true;
+        //return super.onOptionsItemSelected(item);
     }
 
     @Override//this starts teh application

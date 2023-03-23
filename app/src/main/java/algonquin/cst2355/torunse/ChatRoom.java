@@ -106,10 +106,12 @@ public class ChatRoom extends AppCompatActivity {
                 ChatMessage selected = messageList.get(position);
                 // ChatViewModel cvm  = new ViewModelProvider(this).get(ChatViewModel.class);
                 cvm.selectedMessage.postValue(selected);
+                break;
 
             case R.id.item_2:{
 
                 Snackbar.make(messageText, "Version 1.0, created by Xiangwu Dai", Snackbar.LENGTH_LONG);
+                break;
             }
 
         }

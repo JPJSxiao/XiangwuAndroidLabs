@@ -8,9 +8,7 @@
     android:layout_height="match_parent">
 
 
-    <FrameLayout android:id="@+id/fragmentLocation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -65,8 +63,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+
+
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"></androidx.appcompat.widget.Toolbar>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
 <!--            android:id="@+id/myToolbar"-->
 <!--            android:layout_width="100dp"-->
 <!--            android:layout_height="50dp"-->
@@ -75,11 +78,19 @@
 <!--            android:theme="?attr/actionBarTheme"-->
 <!--            app:layout_constraintEnd_toEndOf="parent"-->
 <!--            app:layout_constraintTop_toTopOf="parent" -->
+        <FrameLayout
+            android:id="@+id/fragmentLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="500dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/editText"
+            app:layout_constraintTop_toTopOf="@+id/theRecycleView"></FrameLayout>
 
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </FrameLayout>
+
 </LinearLayout>

@@ -113,7 +113,7 @@ public class ChatRoom extends AppCompatActivity {
 
             case R.id.item_2:{
 
-                Snackbar.make(aView, "Version 1.0, created by Xiangwu Dai", Snackbar.LENGTH_LONG);
+                Snackbar.make(aView, "Version 1.0, created by Xiangwu Dai", Snackbar.LENGTH_LONG).show();
                 break;
             }
 

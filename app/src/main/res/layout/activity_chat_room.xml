@@ -64,6 +64,7 @@
             android:id="@+id/myToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"></androidx.appcompat.widget.Toolbar>
 <!--            android:id="@+id/myToolbar"-->

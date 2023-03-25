@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -48,6 +49,7 @@ public class ChatRoom extends AppCompatActivity {
     int position;
     public TextView messageText;
     public TextView timeText;
+    public EditText aView;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,7 +79,8 @@ public class ChatRoom extends AppCompatActivity {
                         messageList.remove(position);
                         runOnUiThread(()->{
                             myAdapter.notifyItemRemoved(position);
-                            Snackbar.make(messageText, "Item deleted", Snackbar.LENGTH_LONG)
+
+                            Snackbar.make(aView, "Item deleted", Snackbar.LENGTH_LONG)
                                     .setAction("Undo", clk ->{
                                         Executor thread_2 = Executors.newSingleThreadExecutor();
                                         thread_2.execute(()->{
@@ -110,7 +113,7 @@ public class ChatRoom extends AppCompatActivity {
 
             case R.id.item_2:{
 
-                Snackbar.make(messageText, "Version 1.0, created by Xiangwu Dai", Snackbar.LENGTH_LONG);
+                Snackbar.make(aView, "Version 1.0, created by Xiangwu Dai", Snackbar.LENGTH_LONG);
                 break;
             }
 
@@ -133,6 +136,8 @@ public class ChatRoom extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.myToolbar);
+
+        aView = binding.editText;
 
 
         cvm  = new ViewModelProvider(this).get(ChatViewModel.class);

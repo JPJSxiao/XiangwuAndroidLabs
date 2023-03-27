@@ -87,31 +87,75 @@ public class MainActivity extends AppCompatActivity {
                     name = response.getString("name");
 
 
+                    imageUrl = "https://openweathermap.org/img/w/" + iconName + ".png";
 
+                    String pathname = getFilesDir() + "/" + iconName + ".png";
+                    File file = new File(pathname);
+
+                    if (file.exists()) {
+                        image = BitmapFactory.decodeFile(pathname);
+                    } else {        };
+
+                    ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            try {
+                                // Do something with loaded bitmap...
+                                image = bitmap;
+                                image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
+                                runOnUiThread(() -> {
+                                    binding.icon.setImageBitmap(image);
+                                    binding.icon.setVisibility(View.VISIBLE);
+                                });
+
+
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
+                    });
+
+                    queue.add(imgReq);
+
+                    FileOutputStream fOut = null;
+                    try {
+                        fOut = openFileOutput( iconName + ".png", Context.MODE_PRIVATE);
+
+                        if(image != null){
+
+                            image.compress(Bitmap.CompressFormat.PNG, 100, fOut);}
+                        fOut.flush();
+                        fOut.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    runOnUiThread(() -> {
+
+                        binding.temp.setText("The current temperature is " + current);
+                        binding.temp.setVisibility(View.VISIBLE);
+
+                        binding.minTemp.setText("The min temperature is " + min);
+                        binding.minTemp.setVisibility(View.VISIBLE);
+
+                        binding.maxTemp.setText("The max temperature is " + max);
+                        binding.maxTemp.setVisibility(View.VISIBLE);
+
+                        binding.humitidy.setText("The current humidity is " + humidity);
+                        binding.humitidy.setVisibility(View.VISIBLE);
+
+                        binding.description.setText(description);
+                        binding.description.setVisibility(View.VISIBLE);
+
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                runOnUiThread(() -> {
-
-                    binding.temp.setText("The current temperature is " + current);
-                    binding.temp.setVisibility(View.VISIBLE);
-
-                    binding.minTemp.setText("The min temperature is " + min);
-                    binding.minTemp.setVisibility(View.VISIBLE);
-
-                    binding.maxTemp.setText("The max temperature is " + max);
-                    binding.maxTemp.setVisibility(View.VISIBLE);
-
-                    binding.humitidy.setText("The current humidity is " + humidity);
-                    binding.humitidy.setVisibility(View.VISIBLE);
-
-                    binding.description.setText(description);
-                    binding.description.setVisibility(View.VISIBLE);
-
-                });
-
 
             },
                     (error) -> {
@@ -120,60 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-            imageUrl = "https://openweathermap.org/img/w/" + iconName + ".png";
-
-            String pathname = getFilesDir() + "/" + iconName + ".png";
-            File file = new File(pathname);
-
-
-            if (file.exists()) {
-                image = BitmapFactory.decodeFile(pathname);
-            } else {        };
-
-                ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        try {
-                            // Do something with loaded bitmap...
-                            image = bitmap;
-                            image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
-                            runOnUiThread(() -> {
-                                binding.icon.setImageBitmap(image);
-                                binding.icon.setVisibility(View.VISIBLE);
-                            });
-
-
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
-                });
-
-
             queue.add(request);
-            queue.add(imgReq);
-
-            FileOutputStream fOut = null;
-            try {
-                fOut = openFileOutput( iconName + ".png", Context.MODE_PRIVATE);
-
-                if(image != null){
-
-                image.compress(Bitmap.CompressFormat.PNG, 100, fOut);}
-                fOut.flush();
-                fOut.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-
-
 
 
         });

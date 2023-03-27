@@ -3,6 +3,7 @@ package algonquin.cst2355.torunse;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //        setContentView(R.layout.activity_main);
+        binding.editCity.setText("Ottawa");
 
         binding.ForecastButton.setOnClickListener(click -> {
             cityName = binding.editCity.getText().toString();
@@ -83,14 +87,38 @@ public class MainActivity extends AppCompatActivity {
                     name = response.getString("name");
 
 
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
+                runOnUiThread(() -> {
+
+                    binding.temp.setText("The current temperature is " + current);
+                    binding.temp.setVisibility(View.VISIBLE);
+
+                    binding.minTemp.setText("The min temperature is " + min);
+                    binding.minTemp.setVisibility(View.VISIBLE);
+
+                    binding.maxTemp.setText("The max temperature is " + max);
+                    binding.maxTemp.setVisibility(View.VISIBLE);
+
+                    binding.humitidy.setText("The current humidity is " + humidity);
+                    binding.humitidy.setVisibility(View.VISIBLE);
+
+                    binding.description.setText(description);
+                    binding.description.setVisibility(View.VISIBLE);
+
+                });
+
+
             },
                     (error) -> {
+
                     });
-            queue.add(request);
+
+
 
 
             imageUrl = "https://openweathermap.org/img/w/" + iconName + ".png";
@@ -101,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (file.exists()) {
                 image = BitmapFactory.decodeFile(pathname);
-            } else {
+            } else {        };
 
                 ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
                     @Override
@@ -110,32 +138,44 @@ public class MainActivity extends AppCompatActivity {
                             // Do something with loaded bitmap...
                             image = bitmap;
                             image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
+                            runOnUiThread(() -> {
+                                binding.icon.setImageBitmap(image);
+                                binding.icon.setVisibility(View.VISIBLE);
+                            });
+
+
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
                     }
                 }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
                 });
-            };
 
-            runOnUiThread(() -> {
 
-                binding.temp.setText("The current temperature is " + current);
-                binding.temp.setVisibility(View.VISIBLE);
+            queue.add(request);
+            queue.add(imgReq);
 
-                binding.minTemp.setText("The min temperature is " + min);
-                binding.minTemp.setVisibility(View.VISIBLE);
+            FileOutputStream fOut = null;
+            try {
+                fOut = openFileOutput( iconName + ".png", Context.MODE_PRIVATE);
 
-                binding.maxTemp.setText("The max temperature is " + max);
-                binding.maxTemp.setVisibility(View.VISIBLE);
+                if(image != null){
 
-                binding.humitidy.setText("The current humidity is " + humidity);
-                binding.humitidy.setVisibility(View.VISIBLE);
+                image.compress(Bitmap.CompressFormat.PNG, 100, fOut);}
+                fOut.flush();
+                fOut.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
 
-                binding.description.setText(description);
-                binding.description.setVisibility(View.VISIBLE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            });
+
+
+
+
+
         });
 
     }

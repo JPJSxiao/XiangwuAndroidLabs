@@ -94,45 +94,46 @@ public class MainActivity extends AppCompatActivity {
 
                     if (file.exists()) {
                         image = BitmapFactory.decodeFile(pathname);
-                    } else {        };
-
-                    ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
-                        @Override
-                        public void onResponse(Bitmap bitmap) {
-                            try {
-                                // Do something with loaded bitmap...
-                                image = bitmap;
-                                image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
-                                runOnUiThread(() -> {
-                                    binding.icon.setImageBitmap(image);
-                                    binding.icon.setVisibility(View.VISIBLE);
-                                });
+                    } else {
+                        ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap bitmap) {
+                                try {
+                                    // Do something with loaded bitmap...
+                                    image = bitmap;
+                                    image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
 
 
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
-                    });
+                        }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
+                        });
 
-                    queue.add(imgReq);
 
-                    FileOutputStream fOut = null;
-                    try {
-                        fOut = openFileOutput( iconName + ".png", Context.MODE_PRIVATE);
 
-                        if(image != null){
+                        queue.add(imgReq);
+                    };
 
-                            image.compress(Bitmap.CompressFormat.PNG, 100, fOut);}
-                        fOut.flush();
-                        fOut.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//
+//                    FileOutputStream fOut = null;
+//                    try {
+//                        fOut = openFileOutput( iconName + ".png", Context.MODE_PRIVATE);
+//
+//                        if(image != null){
+//
+//                            image.compress(Bitmap.CompressFormat.PNG, 100, fOut);}
+//                        fOut.flush();
+//                        fOut.close();
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
 
                     runOnUiThread(() -> {
 
@@ -147,6 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
                         binding.humitidy.setText("The current humidity is " + humidity);
                         binding.humitidy.setVisibility(View.VISIBLE);
+
+                        binding.icon.setImageBitmap(image);
+                        binding.icon.setVisibility(View.VISIBLE);
 
                         binding.description.setText(description);
                         binding.description.setVisibility(View.VISIBLE);

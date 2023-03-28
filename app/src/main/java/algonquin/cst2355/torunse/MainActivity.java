@@ -95,24 +95,34 @@ public class MainActivity extends AppCompatActivity {
                     if (file.exists()) {
                         image = BitmapFactory.decodeFile(pathname);
                     } else {
-                        ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
-                            @Override
-                            public void onResponse(Bitmap bitmap) {
-                                try {
-                                    // Do something with loaded bitmap...
-                                    image = bitmap;
-                                    image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
+//                        ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
+//                            @Override
+//                            public void onResponse(Bitmap bitmap) {
+//                                try {
+//                                    // Do something with loaded bitmap...
+//                                    image = bitmap;
+//                                    image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
+//
+//
+//
+//                                } catch (FileNotFoundException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
+//                        });
 
-
-
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
+                        ImageRequest imgReq = new ImageRequest(imageUrl, (bitmap) -> {
+                            try {
+                                // Do something with loaded bitmap...
+                                image = bitmap;
+                                image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
+                                binding.icon.setImageBitmap(image);
+                                binding.icon.setVisibility(View.VISIBLE);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
                             }
-                        }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
-                        });
-
-
+                        }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {});
 
                         queue.add(imgReq);
                     };

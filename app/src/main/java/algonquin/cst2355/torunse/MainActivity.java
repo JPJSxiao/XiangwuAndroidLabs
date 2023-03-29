@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,22 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     if (file.exists()) {
                         image = BitmapFactory.decodeFile(pathname);
                     } else {
-//                        ImageRequest imgReq = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
-//                            @Override
-//                            public void onResponse(Bitmap bitmap) {
-//                                try {
-//                                    // Do something with loaded bitmap...
-//                                    image = bitmap;
-//                                    image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
-//
-//
-//
-//                                } catch (FileNotFoundException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {
-//                        });
+
 
                         ImageRequest imgReq = new ImageRequest(imageUrl, (bitmap) -> {
                             try {
@@ -125,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         }, 1024, 1024, ImageView.ScaleType.CENTER, null, (error) -> {});
 
                         queue.add(imgReq);
-                    };
+                    }
 
 
 //
@@ -159,7 +145,10 @@ public class MainActivity extends AppCompatActivity {
                         binding.humitidy.setText("The current humidity is " + humidity);
                         binding.humitidy.setVisibility(View.VISIBLE);
 
-                        binding.icon.setImageBitmap(image);
+
+                        Picasso.get().load(imageUrl).into(binding.icon);
+
+//                        binding.icon.setImageBitmap(image);
                         binding.icon.setVisibility(View.VISIBLE);
 
                         binding.description.setText(description);

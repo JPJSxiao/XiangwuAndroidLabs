@@ -103,8 +103,11 @@ public class MainActivity extends AppCompatActivity {
                                 // Do something with loaded bitmap...
                                 image = bitmap;
                                 image.compress(Bitmap.CompressFormat.PNG, 100, MainActivity.this.openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
-                                binding.icon.setImageBitmap(image);
-                                binding.icon.setVisibility(View.VISIBLE);
+                                runOnUiThread(()->{
+                                    binding.icon.setImageBitmap(image);
+                                    binding.icon.setVisibility(View.VISIBLE);
+                                });
+
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -145,11 +148,14 @@ public class MainActivity extends AppCompatActivity {
                         binding.humitidy.setText("The current humidity is " + humidity);
                         binding.humitidy.setVisibility(View.VISIBLE);
 
+//                        String imUrl = "http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01000/opgs/edr/rcam/RLB_486265291EDR_F0481570RHAZ00323M_.JPG\n";
+//                        String imUrl ="https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg";
+//
 
-                        Picasso.get().load(imageUrl).into(binding.icon);
+//                        Picasso.get().load(imageUrl).into(binding.icon);
 
 //                        binding.icon.setImageBitmap(image);
-                        binding.icon.setVisibility(View.VISIBLE);
+//                        binding.icon.setVisibility(View.VISIBLE);
 
                         binding.description.setText(description);
                         binding.description.setVisibility(View.VISIBLE);
